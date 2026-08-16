@@ -56,6 +56,20 @@ class Settings:
     temperature: float = 0.0
     llm_timeout_s: float = 60.0
     llm_max_retries: int = 2
+    # --- codeact ---
+    #: Which solver answers a task: "codeact" writes programs, "supervisor"
+    #: routes to specialists. Both are kept so they can be compared on the
+    #: same tasks rather than argued about.
+    solver: str = "codeact"
+    max_program_steps: int = 6
+    #: Programs are short; the cap bounds a repetition loop's cost.
+    max_program_tokens: int = 900
+    program_timeout_s: float = 90.0
+    #: Prior steps replayed verbatim. Older ones collapse to a count.
+    program_window: int = 3
+    #: Output shown back to the model, elided from the middle.
+    max_observation_chars: int = 4000
+
     #: Hard ceiling on the finalizer's reply. A graded answer is a few words;
     #: without a cap a repetition loop can emit thousands of tokens of garbage.
     max_answer_tokens: int = 128
@@ -171,6 +185,12 @@ def load_settings() -> Settings:
         llm_timeout_s=_env_float("LLM_TIMEOUT_S", 60.0),
         llm_max_retries=_env_int("LLM_MAX_RETRIES", 2),
         max_answer_tokens=_env_int("MAX_ANSWER_TOKENS", 128),
+        solver=os.getenv("AGENT_SOLVER", "codeact").strip().lower(),
+        max_program_steps=_env_int("MAX_PROGRAM_STEPS", 6),
+        max_program_tokens=_env_int("MAX_PROGRAM_TOKENS", 900),
+        program_timeout_s=_env_float("PROGRAM_TIMEOUT_S", 90.0),
+        program_window=_env_int("PROGRAM_WINDOW", 3),
+        max_observation_chars=_env_int("MAX_OBSERVATION_CHARS", 4000),
         max_supervisor_steps=_env_int("MAX_SUPERVISOR_STEPS", 4),
         max_web_iterations=_env_int("MAX_WEB_ITERATIONS", 3),
         max_code_iterations=_env_int("MAX_CODE_ITERATIONS", 3),
