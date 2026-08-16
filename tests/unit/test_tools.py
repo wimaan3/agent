@@ -94,7 +94,7 @@ class TestFiles:
         """No HF_TOKEN must degrade quietly rather than hitting a 401 per task."""
         import agent.tools.files as files_module
 
-        files_module._dataset_index.cache_clear()
+        files_module._INDEX.clear()
         assert files_module._dataset_index() == {}
 
 
@@ -175,3 +175,23 @@ class TestDownloadMemoisation:
         assert "data.xlsx" in line
         assert "5 bytes" in line
         assert "read_file" in line
+
+
+class TestDatasetIndexCaching:
+    def test_a_failed_listing_is_not_cached(self, settings, monkeypatch):
+        """One transient error once disabled attachments for the whole process."""
+        import agent.tools.files as files_module
+
+        monkeypatch.setattr(files_module, "get_settings", lambda: settings.__class__(hf_token="t"))
+        calls = {"n": 0}
+
+        def flaky(*_a, **_kw):
+            calls["n"] += 1
+            raise ConnectionError("blip")
+
+        monkeypatch.setattr(files_module.requests, "get", flaky)
+
+        files_module._dataset_index()
+        files_module._dataset_index()
+
+        assert calls["n"] == 2, "a failure must be retried, not memoised"
