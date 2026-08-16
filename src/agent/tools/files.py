@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import json
 from collections.abc import Callable
-from functools import lru_cache
 from pathlib import Path
 
 import requests
@@ -105,12 +104,21 @@ def _from_scoring_api(task_id: str) -> tuple[bytes, str] | None:
     return response.content, suffix
 
 
-@lru_cache(maxsize=1)
+#: Populated on the first successful listing and reused for the rest of the run.
+_INDEX: dict[str, str] = {}
+
+
 def _dataset_index() -> dict[str, str]:
     """task_id -> path within the GAIA dataset, or empty when unreachable.
 
-    Cached: one listing serves every task in a run.
+    Cached only on success. Caching a failure was measured to cost a whole task:
+    one transient connection error left an empty index memoised for the life of
+    the process, so every later attachment lookup returned nothing without ever
+    retrying, and six consecutive programs died on the empty path.
     """
+    if _INDEX:
+        return _INDEX
+
     settings = get_settings()
     if not settings.hf_token:
         return {}
@@ -130,7 +138,8 @@ def _dataset_index() -> dict[str, str]:
 
     index = {Path(str(e.get("path", ""))).stem: str(e.get("path", "")) for e in entries}
     log.info("GAIA dataset index: %d attachments", len(index))
-    return index
+    _INDEX.update(index)
+    return _INDEX
 
 
 def _from_dataset(task_id: str) -> tuple[bytes, str] | None:
