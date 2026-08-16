@@ -149,9 +149,15 @@ class BenchmarkRunner:
     def answer_fn(self) -> AnswerFn:
         """Resolved late so importing the harness never builds a model client."""
         if self._answer_fn is None:
-            from agent.core.graph import answer_question
+            if self.settings.solver == "codeact":
+                from agent.codeact import solve
 
-            resolved: AnswerFn = answer_question
+                resolved: AnswerFn = solve
+            else:
+                from agent.core.graph import answer_question
+
+                resolved = answer_question
+            log.info("solver: %s", self.settings.solver)
             self._answer_fn = resolved
         return self._answer_fn
 
