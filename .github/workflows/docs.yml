@@ -1,9 +1,8 @@
 name: Docs
 
+# GitHub Pages is not enabled for this repo, so the site is no
+# longer deployed on push. Re-enable Pages before running this by hand.
 on:
-  push:
-    branches: [main]
-    paths: ["docs/**", "README.md", ".github/workflows/docs.yml"]
   workflow_dispatch:
 
 permissions:
