@@ -13,6 +13,9 @@ hf_oauth_expiration_minutes: 480
 
 # 3MagicLabs Agent
 
+> **This copy is out of date.** Development continues at
+> [Elmdin/agent](https://github.com/Elmdin/agent).
+
 [![CI](https://github.com/3MagicLabs/agent/actions/workflows/ci.yml/badge.svg)](https://github.com/3MagicLabs/agent/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/3MagicLabs/agent/actions/workflows/codeql.yml/badge.svg)](https://github.com/3MagicLabs/agent/actions/workflows/codeql.yml)
 [![Security](https://github.com/3MagicLabs/agent/actions/workflows/security.yml/badge.svg)](https://github.com/3MagicLabs/agent/actions/workflows/security.yml)
@@ -112,4 +115,12 @@ Space installs. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-[Apache License 2.0](LICENSE). See [NOTICE](NOTICE) for attribution.
+[Apache License 2.0](LICENSE), copyright Imaan Soltanalipour and contributors.
+See [NOTICE](NOTICE) for attribution.
+
+## Acknowledgements
+
+This project started from the Hugging Face Agents Course
+[Template Final Assignment](https://huggingface.co/spaces/agents-course/Final_Assignment_Template)
+Space by Joffrey Thomas / Hugging Face. That template does not declare a license;
+the Apache-2.0 license here covers this repository's own contributions.

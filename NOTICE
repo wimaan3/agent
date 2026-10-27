@@ -1,5 +1,14 @@
-3MagicLabs Agent
-Copyright 2026 3MagicLabs
+Elmdin Agent
+Copyright 2026 Imaan Soltanalipour and contributors
 
-This product includes software developed at 3MagicLabs
-(https://github.com/3MagicLabs/agent).
+This product includes software developed at https://github.com/Elmdin/agent,
+licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Third-party origin
+------------------
+This repository began as a copy of the Hugging Face Agents Course
+"Template Final Assignment" Space (https://huggingface.co/spaces/agents-course/Final_Assignment_Template),
+written by Joffrey Thomas / Hugging Face. Its commits (2025-04-21 onward) are
+kept in this repository's history. The Space does not declare a license, so
+the Apache-2.0 license above covers only the contributions made in this
+repository; any remaining upstream portions stay with their authors.
