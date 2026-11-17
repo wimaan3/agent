@@ -58,5 +58,4 @@ package with CI, docs and observability.
 - Empty placeholder modules for unimplemented agents and tools.
 - `langchain` and `langchain-community` dependencies, no longer used.
 
-[Unreleased]: https://github.com/Elmdin/agent/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/Elmdin/agent/releases/tag/v0.1.0
+[Unreleased]: https://github.com/Elmdin/agent/commits/main
